@@ -32,22 +32,9 @@ export async function getStaticProps({ params, preview = false }) {
           seo: _seoMetaTags {
             ...metaTagsFragment
           }
-          title
+          tituloDoImovel
           slug
-          content {
-            value
-            blocks {
-              __typename
-              ...on ImageBlockRecord {
-                id
-                image {
-                  responsiveImage(imgixParams: {fm: jpg, fit: crop, w: 2000, h: 1000 }) {
-                    ...responsiveImageFragment
-                  }
-                }
-              }
-            }
-          }
+          descricaoDetalhada
           date
           ogImage: coverImage{
             url(imgixParams: {fm: jpg, fit: crop, w: 2000, h: 1000 })
@@ -57,7 +44,7 @@ export async function getStaticProps({ params, preview = false }) {
               ...responsiveImageFragment
             }
           }
-          author {
+          autor {
             name
             picture {
               url(imgixParams: {fm: jpg, fit: crop, w: 100, h: 100, sat: -100})
@@ -66,7 +53,7 @@ export async function getStaticProps({ params, preview = false }) {
         }
 
         morePosts: allPosts(orderBy: date_DESC, first: 2, filter: {slug: {neq: $slug}}) {
-          title
+            tituloDoImovel
           slug
           excerpt
           date
@@ -75,7 +62,7 @@ export async function getStaticProps({ params, preview = false }) {
               ...responsiveImageFragment
             }
           }
-          author {
+          autor {
             name
             picture {
               url(imgixParams: {fm: jpg, fit: crop, w: 100, h: 100, sat: -100})
@@ -123,12 +110,12 @@ export default function Post({ subscription, preview }) {
         <Header />
         <article>
           <PostHeader
-            title={post.title}
+            title={post.tituloDoImovel}
             coverImage={post.coverImage}
             date={post.date}
-            author={post.author}
+            author={post.autor}
           />
-          <PostBody content={post.content} />
+          <PostBody content={post.descricaoDetalhada} />
         </article>
         <SectionSeparator />
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}

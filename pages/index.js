@@ -17,13 +17,13 @@ export async function getStaticProps({ preview }) {
             ...metaTagsFragment
           }
         }
-        blog {
+        imovel {
           seo: _seoMetaTags {
             ...metaTagsFragment
           }
         }
         allPosts(orderBy: date_DESC, first: 20) {
-          title
+          tituloDoImovel
           slug
           excerpt
           date
@@ -32,7 +32,7 @@ export async function getStaticProps({ preview }) {
               ...responsiveImageFragment
             }
           }
-          author {
+          autor {
             name
             picture {
               url(imgixParams: {fm: jpg, fit: crop, w: 100, h: 100, sat: -100})
@@ -66,12 +66,12 @@ export async function getStaticProps({ preview }) {
 
 export default function Index({ subscription }) {
   const {
-    data: { allPosts, site, blog },
+    data: { allPosts, site, imovel },
   } = useQuerySubscription(subscription);
 
   const heroPost = allPosts[0];
   const morePosts = allPosts.slice(1);
-  const metaTags = blog.seo.concat(site.favicon);
+  const metaTags = imovel.seo.concat(site.favicon);
 
   return (
     <>
@@ -81,10 +81,10 @@ export default function Index({ subscription }) {
           <Intro />
           {heroPost && (
             <HeroPost
-              title={heroPost.title}
+              title={heroPost.tituloDoImovel}
               coverImage={heroPost.coverImage}
               date={heroPost.date}
-              author={heroPost.author}
+              author={heroPost.autor}
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
             />
